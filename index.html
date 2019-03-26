@@ -17,14 +17,21 @@
     </header>
 
     <div class="container">
-        <section class="current-train-schedule">
+        <table class="current-train-schedule">
             <h4>Current Train Schedule</h4>
-            <div id="train-name">Train Name</div>
-            <div id="destination-name">Destination</div>
-            <div id="frequency">Frequency (min)</div>
-            <div id="next-arrival">Next Arrival</div>
-            <div id="minutes-away">Minutes Away</div>
-        </section>
+            <thead>
+                <tr>
+                    <th scope='col' id="train-name">Train Name</th>
+                    <th scope='col' id="destination-name">Destination</th>
+                    <th scope='col' id="frequency">Frequency (min)</th>
+                    <th scope='col' id="next-arrival">Next Arrival</th>
+                    <th scope='col' id="minutes-away">Minutes Away</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
 
         <form role='form'>
             <section class="add-train">
@@ -39,11 +46,11 @@
                 </div>
                 <div class="form-group row">
                     <label for="enter-train-time">First Train Time (HH:mm - military time)</label>
-                    <input type='number' id="enter-train-time"></input>
+                    <input type='name' id="enter-train-time"></input>
                 </div>
                 <div class="form-group row">
                     <label for="enter-frequency">Frequency (min)</label>
-                    <input type='number' id="enter-frequency"></input>
+                    <input type='name' id="enter-frequency"></input>
                 </div>
                 <button type='submit' id="add-train-info">Submit</button>
             </section>

@@ -13,12 +13,12 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // initial values
-var train = '';
-var destination = '';
-var frequency = 0;
-var firstArrival = 0;
-var nextArrival = 0;
-var minsAway = 0;
+var train;
+var destination;
+var frequency;
+var firstArrival;
+var nextArrival = '';
+var minsAway = '';
 
 // capture train enter info
 $('#add-train-info').on('click', function(event){
@@ -50,12 +50,55 @@ database.ref().on("child_added", function(snapshot) {
     console.log(sv.firstArrival);
     console.log(sv.frequency);
 
+    untilNextTrain();
 
-    // Change the HTML to reflect
-    $("#train-name").append(sv.train);
-    $("#destination-name").append(sv.destination);
-    $("#next-arrival").append(sv.firstArrival);
-    $("#frequency").append(sv.frequency);
+    var tRow = $('<tr class="table-row">');
+    var tAway = $('<td>').append(minsAway);
+    var tName = $('<td>').append(sv.train);
+    var tDest = $('<td>').append(sv.destination);
+    
+
+    tRow.append(tName, tDest, nextArrival, tAway);
+      // Append the table row to the table body
+      $('tBody').append(tRow);
+
+      function untilNextTrain() {
+        var trainFrequency = sv.frequency;
+
+        // first train
+        var initialTrainTime =  moment(sv.firstArrival, 'HH:mm').subtract(1, "years");
+        console.log('first train: ' + initialTrainTime);
+
+        // difference between times
+        var diffTime = moment().diff(moment(initialTrainTime), "minutes");
+        console.log('diff in time: ' + diffTime);
+
+        var remainder = diffTime % trainFrequency;
+        console.log(remainder);
+
+        // next arrivak
+        var timeUntilNextArrival = trainFrequency - remainder;
+        minsAway = timeUntilNextArrival;
+        console.log('mins away: ' + minsAway);
+
+        // Current Time
+        var currentTime = moment();
+        console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+        // next train
+        var nextTrain = moment().add(timeUntilNextArrival, "minutes");
+        nextArrival = moment(nextTrain).format("hh:mm");
+        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+        nextArrival = $('<td>').append(sv.frequency);
+        nextTrain = $('<td>').append(sv.firstArrival);
+
+
+        
+        // $('#minutes-away').append(minsAway);
+        // $('<td>')
+        // $(td).append(minsAway);
+      };
 // Handle the errors
 }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
