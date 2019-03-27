@@ -15,7 +15,7 @@ var database = firebase.database();
 // initial values
 var train;
 var destination;
-var frequency;
+var enterFrequency;
 var firstArrival;
 var nextArrival = '';
 var minsAway = '';
@@ -28,15 +28,16 @@ $('#add-train-info').on('click', function(event){
     train = $('#enter-train').val().trim();
     destination = $('#enter-destination').val().trim();
     firstArrival = $('#enter-train-time').val().trim();
-    frequency = $('#enter-frequency').val().trim();
+    enterFrequency = $('#enter-frequency').val().trim();
 
     // code that handles push
     database.ref().push({
         train: train,
         destination: destination,
         firstArrival: firstArrival,
-        frequency: frequency
+        frequency: enterFrequency,
     });
+    
 });
 
 // Firebase watcher .on("child_added")
@@ -50,18 +51,17 @@ database.ref().on("child_added", function(snapshot) {
     console.log(sv.firstArrival);
     console.log(sv.frequency);
 
+
     untilNextTrain();
 
     var tRow = $('<tr class="table-row">');
-    var tAway = $('<td>').append(minsAway);
-    var tName = $('<td>').append(sv.train);
+    var tName = $('<p>').append(sv.train);
     var tDest = $('<td>').append(sv.destination);
-    
+   
 
-    tRow.append(tName, tDest, nextArrival, tAway);
+    tRow.append(tName, tDest, nextArrival, minsAway);
       // Append the table row to the table body
       $('tBody').append(tRow);
-
       function untilNextTrain() {
         var trainFrequency = sv.frequency;
 
@@ -76,10 +76,11 @@ database.ref().on("child_added", function(snapshot) {
         var remainder = diffTime % trainFrequency;
         console.log(remainder);
 
-        // next arrivak
+        // next arrival
         var timeUntilNextArrival = trainFrequency - remainder;
         minsAway = timeUntilNextArrival;
         console.log('mins away: ' + minsAway);
+        // -------------------------------------------
 
         // Current Time
         var currentTime = moment();
@@ -92,12 +93,8 @@ database.ref().on("child_added", function(snapshot) {
 
         nextArrival = $('<td>').append(sv.frequency);
         nextTrain = $('<td>').append(sv.firstArrival);
-
-
         
-        // $('#minutes-away').append(minsAway);
-        // $('<td>')
-        // $(td).append(minsAway);
+        minsAway = $('<td>').append(minsAway);
       };
 // Handle the errors
 }, function(errorObject) {

@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Train Schedule App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Ubuntu" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
 </head>
 <body>
-    <header class='jumbotron'> 
-        <h1> Scheduling your train has never been easier</h1>
-        <h3>Scroll down to board now!</h3>
-    </header>
+    <div class="bg-img">
+            <div id="header-text">
+                <h1> Scheduling your train has never been easier.</h1>
+                <h3>Scroll down to board now!</h3>
+            </div> 
+    </div>
 
     <div class="container">
         <table class="current-train-schedule">
@@ -28,14 +31,16 @@
                     <th scope='col' id="minutes-away">Minutes Away</th>
                 </tr>
             </thead>
-            <tbody>
+                <tbody>
+                
 
-            </tbody>
+                
+                </tbody>
         </table>
 
         <form role='form'>
+            <h4>Add Train</h4>
             <section class="add-train">
-                <h4>Add Train</h4>
                 <div class="form-group row">
                     <label for="enter-train">Train Name</label>
                     <input type='name' id="enter-train"></input>
@@ -56,7 +61,9 @@
             </section>
         </form>
     </div>
-
+    <footer class="scroll-right">
+       <p>&copy; Deyon Shannon 2019</p>
+    </footer>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src='assets/js/app.js'></script>
 </body>
